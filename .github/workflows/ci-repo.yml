@@ -85,7 +85,13 @@ jobs:
           fi
 
   unit-test:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
     needs: unit-test-lookup
     if: ${{ needs.unit-test-lookup.outputs.should-test == 'true' }}
 
